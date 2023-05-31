@@ -1,0 +1,27 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="text-capitalize text-bold">
+            {{post.title}}
+        </h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+                <p>
+                    {{post.content}}
+                </p>
+                <p class="text-right w-100">
+                    <button class="btn btn-primary mr-2"
+                    [routerLink]="['edit']">Edit</button>
+                    <button class="btn btn-danger">Delete</button>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="banner">
+                    <img src="https://source.unsplash.com/random/?city" alt="">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
