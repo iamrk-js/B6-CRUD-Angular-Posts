@@ -9,6 +9,7 @@ import { PostsComponent } from './shared/component/posts/posts.component';
 import { CreatePostComponent } from './shared/component/create-post/create-post.component';
 import { NavComponent } from './shared/component/nav/nav.component';
 import { PostComponent } from './shared/component/post/post.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PostComponent } from './shared/component/post/post.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
