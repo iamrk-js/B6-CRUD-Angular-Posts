@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostsService } from '../../services/posts.service';
 import { Ipost } from '../../models/posts';
+import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -19,13 +20,23 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // this.route.params
+    //   .subscribe(res => {
+    //     this.userId = +res['id']
+    //     this._postsService.getPost(this.userId)
+    //       .subscribe(res => {
+    //         this.post = res
+    //       })
+    //   })
     this.route.params
+      .pipe(
+        concatMap((params:Params) => {
+          let id = +params['id'];
+          return this._postsService.getPost(id)
+        })
+      )
       .subscribe(res => {
-        this.userId = +res['id']
-        this._postsService.getPost(this.userId)
-          .subscribe(res => {
-            this.post = res
-          })
+        this.post = res;
       })
   }
 

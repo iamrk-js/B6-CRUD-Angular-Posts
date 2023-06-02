@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Ipost } from '../models/posts';
@@ -13,7 +13,12 @@ export class PostsService {
   constructor(private _http: HttpClient) { }
 
   getAllPosts(): Observable<Ipost[]> {
-    return this._http.get<Ipost[]>(this.postUrl)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer your_token_here'
+    });
+
+    return this._http.get<Ipost[]>(this.postUrl , {headers})
       .pipe(
         catchError((err: any) => {
           alert(err)
@@ -37,7 +42,13 @@ export class PostsService {
   }
 
   createPost(post : Ipost){
-    return this._http.post(this.postUrl, post)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer your_token_here'
+    });
+    return this._http.post(this.postUrl, post, {
+      headers : headers
+    })
   }
 
 }

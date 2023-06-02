@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PostsService } from '../../services/posts.service';
 import { Ipost } from '../../models/posts';
 
@@ -24,14 +24,18 @@ export class CreatePostComponent implements OnInit {
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required]),
     })
-    this.postId = +this._route.snapshot.params['id'];
-    if (this.postId) {
-      this._postService.getPost(this.postId)
-        .subscribe((res) => {
-          const postObj = res;
-          this.postForm.patchValue(postObj)
-        })
-    }
+    this._route.params
+      .subscribe((params: Params) => {
+        this.postId = +params['id'];
+        if (this.postId) {
+          this._postService.getPost(this.postId)
+            .subscribe((res) => {
+              const postObj = res;
+              this.postForm.patchValue(postObj)
+            })
+        }
+      })
+
   }
   onUpdatePost() {
     this._postService.updatePost(this.postForm.value, this.postId)
@@ -52,7 +56,8 @@ export class CreatePostComponent implements OnInit {
 
       this._postService.createPost(obj)
         .subscribe(res => {
-          console.log(res)
+          console.log(res);
+          this._router.navigate(['/posts'])
         })
     }
   }
